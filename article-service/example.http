@@ -1,0 +1,15 @@
+GET http://localhost:8080/
+Accept: application/json
+
+###
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "name": "Article 1",
+  "description": "The best article of all times"
+}
+
+###
+DELETE http://localhost:8080/655cabd93dea2ba2e45e3159/
+Accept: application/json
