@@ -8,7 +8,7 @@ refreshArticleCount()
 
 async function refreshArticleCount() {
   const articles = await fetchArticles()
-  articleCount.value = articles.articles.length
+  articleCount.value = articles.length
 }
 </script>
 

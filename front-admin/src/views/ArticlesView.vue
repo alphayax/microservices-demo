@@ -3,6 +3,7 @@ import ArticleCard from "@/components/ArticleCard.vue";
 import {fetchArticles, addArticle} from "../../api";
 import {ref} from "vue";
 import AddArticleDialog from "@/components/AddArticleDialog.vue";
+import {notify} from "@kyvg/vue3-notification";
 
 const isLoading = ref(false);
 const articles = ref([]);
@@ -10,10 +11,23 @@ const articles = ref([]);
 refreshArticles();
 
 async function refreshArticles() {
-  isLoading.value = true;
-  const articleData = await fetchArticles();
-  articles.value = articleData.articles
-  isLoading.value = false;
+  try {
+    isLoading.value = true;
+    articles.value = await fetchArticles();
+    notify({
+      title: 'Articles fetched',
+      text: `Fetched ${articles.value.length} articles`,
+      type: 'success'
+    });
+  } catch (e) {
+    notify({
+      title: 'Unable to fetch articles',
+      text: e,
+      type: 'error'
+    });
+  } finally {
+    isLoading.value = false;
+  }
 }
 
 async function saveArticle(article) {

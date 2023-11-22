@@ -22,6 +22,8 @@ import {RouterView} from 'vue-router'
     <v-footer :app="true">
       <span class="text-grey-darken-1 font-italic">WeScale Training</span>
     </v-footer>
+
+    <notifications />
   </v-app>
 </template>
 
