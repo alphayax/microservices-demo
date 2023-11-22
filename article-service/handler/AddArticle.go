@@ -5,6 +5,7 @@ import (
 	"article-service/repository"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -22,6 +23,7 @@ func AddArticle(ctx *gin.Context) {
 
 	err := repository.AddArticle(ctx, addArticleRequest.toArticle())
 	if err != nil {
+		log.Warnf("AddArticle Error: %s", err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

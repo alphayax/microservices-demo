@@ -5,13 +5,13 @@ import (
 	"article-service/repository"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"log"
 	"time"
 )
 
 func main() {
-	log.Println("-= Article Service =-")
+	log.Infoln("-= Article Service =-")
 	loadConfig()
 	initDatabase()
 	loadApiServer()
@@ -22,8 +22,9 @@ func loadConfig() {
 	viper.SetDefault("listen", ":8080")
 	viper.SetDefault("mongodbUri", "mongodb://localhost:27017/alpha-articles")
 	viper.SetConfigFile("config.yaml")
+	viper.AddConfigPath("/etc/article-service/")
 	if err := viper.ReadInConfig(); err != nil {
-		log.Println(err)
+		log.Warnln(err)
 	}
 }
 
@@ -31,7 +32,7 @@ func loadConfig() {
 func initDatabase() {
 	mongodbUri := viper.GetString("mongodbUri")
 	if err := repository.Initialize(mongodbUri); err != nil {
-		log.Panic(err)
+		log.Panicln(err)
 	}
 }
 
