@@ -11,19 +11,23 @@ import (
 )
 
 func main() {
-	log.Println("-= Article Alpha =-")
+	log.Println("-= Article Service =-")
 	loadConfig()
 	initDatabase()
 	loadApiServer()
 }
 
+// loadConfig define the default values and loads the user configuration from config.yaml
 func loadConfig() {
+	viper.SetDefault("listen", ":8080")
+	viper.SetDefault("mongodbUri", "mongodb://localhost:27017/alpha-articles")
 	viper.SetConfigFile("config.yaml")
 	if err := viper.ReadInConfig(); err != nil {
 		log.Println(err)
 	}
 }
 
+// initDatabase initialize the database connection
 func initDatabase() {
 	mongodbUri := viper.GetString("mongodbUri")
 	if err := repository.Initialize(mongodbUri); err != nil {
@@ -31,6 +35,8 @@ func initDatabase() {
 	}
 }
 
+// loadApiServer initialize the API server with a cors middleware and define routes to be served.
+// This function is blocking: it will wait until the server returns an error
 func loadApiServer() {
 	Router := gin.New()
 	Router.Use(cors.New(cors.Config{
@@ -49,6 +55,7 @@ func loadApiServer() {
 	Router.POST("/", handler.AddArticle)
 	Router.DELETE("/:articleId/", handler.DeleteArticle)
 
-	err := Router.Run(":8080")
+	listenAddress := viper.GetString("listen")
+	err := Router.Run(listenAddress)
 	log.Panicln(err)
 }
