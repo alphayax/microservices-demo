@@ -21,6 +21,10 @@ func main() {
 func loadConfig() {
 	viper.SetDefault("listen", ":8080")
 	viper.SetDefault("mongodbUri", "mongodb://localhost:27017/alpha-articles")
+	err := viper.BindEnv("mongodbUri", "MONGODB_URI")
+	if err != nil {
+		log.Warnln(err)
+	}
 	viper.SetConfigFile("config.yaml")
 	viper.AddConfigPath("/etc/article-service/")
 	if err := viper.ReadInConfig(); err != nil {
@@ -32,8 +36,10 @@ func loadConfig() {
 func initDatabase() {
 	mongodbUri := viper.GetString("mongodbUri")
 	if err := repository.Initialize(mongodbUri); err != nil {
+		log.Errorf("Failed to connect to %s", mongodbUri)
 		log.Panicln(err)
 	}
+	log.Infof("Connected to %s", mongodbUri)
 }
 
 // loadApiServer initialize the API server with a cors middleware and define routes to be served.
