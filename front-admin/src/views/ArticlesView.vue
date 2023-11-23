@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import ArticleCard from "@/components/ArticleCard.vue";
-import {fetchArticles, addArticle} from "../../api";
 import {ref} from "vue";
-import AddArticleDialog from "@/components/AddArticleDialog.vue";
 import {notify} from "@kyvg/vue3-notification";
+import {fetchArticles, addArticle} from "../api";
+import ArticleCard from "@/components/ArticleCard.vue";
+import AddArticleDialog from "@/components/AddArticleDialog.vue";
+import type {Article} from "@/model";
 
 const isLoading = ref(false);
-const articles = ref([]);
+const articles = ref<Article[]>([]);
 
 refreshArticles();
 
@@ -19,7 +20,7 @@ async function refreshArticles() {
       text: `Fetched ${articles.value.length} articles`,
       type: 'success'
     });
-  } catch (e) {
+  } catch (e: any) {
     notify({
       title: 'Unable to fetch articles',
       text: e,
@@ -30,7 +31,7 @@ async function refreshArticles() {
   }
 }
 
-async function saveArticle(article) {
+async function saveArticle(article: Article) {
   await addArticle(article)
   await refreshArticles()
 }

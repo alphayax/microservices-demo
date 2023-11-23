@@ -1,5 +1,6 @@
+import type {Article} from "@/model";
 
-export async function fetchArticles() {
+export async function fetchArticles(): Promise<Article[]> {
   const articleResponse = await fetch('http://localhost:8080/')
   if (!articleResponse.ok) {
     return Promise.reject(articleResponse.statusText)
@@ -9,7 +10,7 @@ export async function fetchArticles() {
   return articleData.articles || []
 }
 
-export function addArticle(article) {
+export function addArticle(article: Article) {
   return fetch('http://localhost:8080/', {
     method: 'POST',
     headers: {

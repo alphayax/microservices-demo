@@ -1,4 +1,4 @@
-module article-cart
+module cart-service
 
 go 1.20
 

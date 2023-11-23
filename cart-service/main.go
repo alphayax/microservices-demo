@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	log.Infoln("-= Article Cart =-")
+	log.Infoln("-= Cart service =-")
 	loadConfig()
 	initDatabase()
 	loadApiServer()
@@ -51,9 +51,10 @@ func loadApiServer() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	//Router.GET("/", handler.GetArticle)
-	//Router.POST("/", handler.AddArticle)
-	//Router.DELETE("/:articleId/", handler.DeleteArticle)
+	//Router.POST("/", handler.AddCart)
+	//Router.GET("/:cartId/", handler.GetCart)
+	//Router.PATCH("/:cartId/", handler.UpdateCart)
+	//Router.DELETE("/:cartId/", handler.DeleteCart)
 
 	listenAddress := viper.GetString("listen")
 	err := Router.Run(listenAddress)

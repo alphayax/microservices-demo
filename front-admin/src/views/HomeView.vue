@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {fetchArticles} from "../../api";
+import {fetchArticles} from "../api";
 
 const articleCount = ref(0)
 
