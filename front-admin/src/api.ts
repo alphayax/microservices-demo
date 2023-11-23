@@ -1,12 +1,27 @@
 import type {Article} from "@/model";
 
+interface EndpointsConfig {
+  apiArticlesEndpoint: string
+}
+
+let endpoints: EndpointsConfig = {
+  apiArticlesEndpoint: ""
+}
+
+async function getEndpoints() : Promise<EndpointsConfig> {
+  if (endpoints.apiArticlesEndpoint === "") {
+    endpoints = await fetch("config/endpoints.json").then((response) => response.json())
+  }
+  return endpoints
+}
+
 export async function fetchArticles(): Promise<Article[]> {
-  const articleResponse = await fetch('http://localhost:8080/')
+  const endpoints = await getEndpoints()
+  const articleResponse = await fetch(endpoints.apiArticlesEndpoint + "/")
   if (!articleResponse.ok) {
     return Promise.reject(articleResponse.statusText)
   }
   const articleData = await articleResponse.json()
-  console.log(articleResponse, articleData)
   return articleData.articles || []
 }
 
