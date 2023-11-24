@@ -1,6 +1,8 @@
 package main
 
 import (
+	"cart-service/handler"
+	"cart-service/reporitory"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -18,7 +20,7 @@ func main() {
 // loadConfig define the default values and loads the user configuration from config.yaml
 func loadConfig() {
 	viper.SetDefault("listen", ":8081")
-	//viper.SetDefault("redisUri", "")
+	viper.SetDefault("redisUri", "redis://localhost:6379")
 	err := viper.BindEnv("redisUri", "REDIS_URI")
 	if err != nil {
 		log.Warnln(err)
@@ -32,7 +34,12 @@ func loadConfig() {
 
 // initDatabase initialize the database connection
 func initDatabase() {
-	// init redis database connection
+	redisUri := viper.GetString("redisUri")
+	if err := reporitory.Initialize(redisUri); err != nil {
+		log.Errorf("Failed to connect to %s", redisUri)
+		log.Panicln(err)
+	}
+	log.Infof("Connected to %s", redisUri)
 }
 
 // loadApiServer initialize the API server with a cors middleware and define routes to be served.
@@ -41,7 +48,7 @@ func loadApiServer() {
 	Router := gin.New()
 	Router.Use(cors.New(cors.Config{
 		//AllowOrigins:     []string{"http://localhost:3001"},
-		AllowMethods:     []string{"GET", "POST", "DELETE"},
+		AllowMethods:     []string{"GET", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, Accept, Origin, Cache-Control, X-Requested-With"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -51,10 +58,9 @@ func loadApiServer() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	//Router.POST("/", handler.AddCart)
-	//Router.GET("/:cartId/", handler.GetCart)
-	//Router.PATCH("/:cartId/", handler.UpdateCart)
-	//Router.DELETE("/:cartId/", handler.DeleteCart)
+	Router.GET("/:cartId/", handler.GetCart)
+	Router.PUT("/:cartId/", handler.UpdateCart)
+	Router.DELETE("/:cartId/", handler.DeleteCart)
 
 	listenAddress := viper.GetString("listen")
 	err := Router.Run(listenAddress)

@@ -1,0 +1,14 @@
+GET http://localhost:8081/1/
+Accept: application/json
+
+###
+PUT http://localhost:8081/1/
+Content-Type: application/json
+
+{
+  "items": ["1", "2", "3"]
+}
+
+###
+DELETE http://localhost:8081/1/
+Accept: application/json
