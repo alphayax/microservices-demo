@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import {Article} from "@/model";
 import {ref} from "vue";
 import {fetchArticles, saveCart} from "@/api";
@@ -16,11 +15,9 @@ async function refresh() {
 }
 
 async function addToCart(articleId: string) {
-  console.log(`Add ${articleId} to cart`)
   appStore.addToCart(articleId)
   await saveCart(appStore.cartId, appStore.cartItems)
 }
-
 </script>
 
 <template>
