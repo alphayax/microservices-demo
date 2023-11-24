@@ -25,8 +25,9 @@ export async function fetchArticles(): Promise<Article[]> {
   return articleData.articles || []
 }
 
-export function addArticle(article: Article) {
-  return fetch('http://localhost:8080/', {
+export async function addArticle(article: Article) {
+  const endpoints = await getEndpoints()
+  return fetch(endpoints.apiArticlesEndpoint + "/", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
