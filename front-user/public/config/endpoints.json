@@ -1,0 +1,4 @@
+{
+  "apiArticlesEndpoint": "http://localhost:8080",
+  "apiCartEndpoint": "http://localhost:8081"
+}
