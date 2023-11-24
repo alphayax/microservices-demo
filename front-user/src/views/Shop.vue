@@ -4,6 +4,7 @@ import {Article} from "@/model";
 import {ref} from "vue";
 import {fetchArticles, saveCart} from "@/api";
 import {useAppStore} from "@/store/app";
+import ArticleCard from "@/components/ArticleCard.vue";
 
 const appStore = useAppStore()
 const articles = ref<Article[]>([])
@@ -26,13 +27,7 @@ async function addToCart(articleId: string) {
   <v-container>
     <v-row>
       <v-col v-for="article in articles" cols="4">
-        <v-card :title="article.title" :subtitle="article.id">
-          <v-card-text>{{ article.description }}</v-card-text>
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn prepend-icon="mdi-plus" text="Add to cart" @click="addToCart(article.id)"/>
-          </v-card-actions>
-        </v-card>
+        <ArticleCard :article="article" @onArticleAddedToCart="addToCart"/>
       </v-col>
     </v-row>
   </v-container>
