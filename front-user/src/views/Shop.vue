@@ -21,7 +21,6 @@ async function addToCart(articleId: string) {
 }
 
 async function removeFromCart(articleId: string) {
-  console.log('removeFromCart', articleId)
   appStore.removeFromCart(articleId)
   await saveCart(appStore.cartId, appStore.cartItems)
 }
