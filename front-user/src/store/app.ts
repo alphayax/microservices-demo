@@ -21,12 +21,12 @@ export const useAppStore = defineStore('app', () => {
     cartItems.value = await fetchCart(cartId.value)
   }
 
-  function addToCart(item) {
-    cartItems.value.push(item)
+  function addToCart(itemId: string) {
+    cartItems.value.push(itemId)
   }
 
-  function removeFromCart(item) {
-    cartItems.value = cartItems.value.filter((i) => i !== item)
+  function removeFromCart(itemId: string) {
+    cartItems.value = cartItems.value.filter((cartItemId) => cartItemId !== itemId)
   }
 
   return {
