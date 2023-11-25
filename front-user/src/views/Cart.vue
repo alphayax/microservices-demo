@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
 import {ref} from "vue";
-import {fetchCart, saveCart} from "@/api";
+import {saveCart} from "@/api";
 import {useAppStore} from "@/store/app";
 
 const appStore = useAppStore()
@@ -10,17 +9,15 @@ const cartItems = ref<string[]>([])
 refresh()
 
 async function refresh() {
-  const cartId = appStore.cartId
-  cartItems.value = await fetchCart(cartId)
+  await appStore.loadCart()
+  cartItems.value = appStore.cartItems
 }
 
 async function removeFromCart(articleId: string) {
-  console.log(`Remove ${articleId} from cart`)
   appStore.removeFromCart(articleId)
   await saveCart(appStore.cartId, appStore.cartItems)
   await refresh()
 }
-
 </script>
 
 <template>
