@@ -11,7 +11,17 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: alphayax/microservice-demo-cart-service
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -30,16 +40,25 @@ jobs:
         with:
           context: ./cart-service/
           push: true
-          tags: |
-            alphayax/microservice-demo-cart-service:latest
-            alphayax/microservice-demo-cart-service:{{version}}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   docker-api-article:
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: alphayax/microservice-demo-article-service
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -58,16 +77,25 @@ jobs:
         with:
           context: ./article-service/
           push: true
-          tags: |
-            alphayax/microservice-demo-article-service:latest
-            alphayax/microservice-demo-article-service:{{version}}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   docker-front-user:
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: alphayax/microservice-demo-frontend-user
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -86,16 +114,25 @@ jobs:
         with:
           context: ./front-user/
           push: true
-          tags: |
-            alphayax/microservice-demo-frontend-user:latest
-            alphayax/microservice-demo-frontend-user:{{version}}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   docker-front-admin:
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: alphayax/microservice-demo-frontend-admin
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}           
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -114,6 +151,5 @@ jobs:
         with:
           context: ./front-admin/
           push: true
-          tags: |
-            alphayax/microservice-demo-frontend-admin:latest
-            alphayax/microservice-demo-frontend-admin:{{version}}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
