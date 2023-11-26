@@ -14,3 +14,17 @@ The application is composed of the following microservices:
   - Connected to a Redis database.
 - **[User frontend](./front-user)**: Vuejs application that serves as the frontend.
 - **[Admin frontend](./front-admin)**: Vuejs application that serves as the admin frontend.
+
+## Run the application
+
+### `docker-compose`
+
+A docker-compose file is provided at the root of the repository to run the application.
+
+```sh
+docker-compose up -d
+```
+
+### Kubernetes
+
+> In a near future :)
