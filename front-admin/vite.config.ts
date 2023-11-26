@@ -31,6 +31,7 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/admin/',
   define: { 'process.env': {} },
   resolve: {
     alias: {
