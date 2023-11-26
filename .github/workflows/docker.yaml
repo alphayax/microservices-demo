@@ -32,7 +32,7 @@ jobs:
           push: true
           tags: |
             alphayax/microservice-demo-cart-service:latest
-            alphayax/microservice-demo-cart-service:${GITHUB_REF_NAME}
+            alphayax/microservice-demo-cart-service:{{version}}
 
   docker-api-article:
     runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
           push: true
           tags: |
             alphayax/microservice-demo-article-service:latest
-            alphayax/microservice-demo-article-service:${GITHUB_REF_NAME}
+            alphayax/microservice-demo-article-service:{{version}}
 
   docker-front-user:
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
           push: true
           tags: |
             alphayax/microservice-demo-frontend-user:latest
-            alphayax/microservice-demo-frontend-user:${GITHUB_REF_NAME}
+            alphayax/microservice-demo-frontend-user:{{version}}
 
   docker-front-admin:
     runs-on: ubuntu-latest
@@ -116,4 +116,4 @@ jobs:
           push: true
           tags: |
             alphayax/microservice-demo-frontend-admin:latest
-            alphayax/microservice-demo-frontend-admin:${GITHUB_REF_NAME}
+            alphayax/microservice-demo-frontend-admin:{{version}}
