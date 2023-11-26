@@ -2,8 +2,8 @@ name: Build Docker images
 
 on:
   push:
-    branches:
-      - 'main'
+    tags:
+      - '*' # Push events to matching tags
 
 jobs:
   docker-api-cart:
@@ -30,7 +30,9 @@ jobs:
         with:
           context: ./cart-service/
           push: true
-          tags: alphayax/microservice-demo-cart-service:latest
+          tags: |
+            alphayax/microservice-demo-cart-service:latest
+            alphayax/microservice-demo-cart-service:${GITHUB_REF_NAME}
 
   docker-api-article:
     runs-on: ubuntu-latest
@@ -56,7 +58,9 @@ jobs:
         with:
           context: ./article-service/
           push: true
-          tags: alphayax/microservice-demo-article-service:latest
+          tags: |
+            alphayax/microservice-demo-article-service:latest
+            alphayax/microservice-demo-article-service:${GITHUB_REF_NAME}
 
   docker-front-user:
     runs-on: ubuntu-latest
@@ -82,7 +86,9 @@ jobs:
         with:
           context: ./front-user/
           push: true
-          tags: alphayax/microservice-demo-frontend-user:latest
+          tags: |
+            alphayax/microservice-demo-frontend-user:latest
+            alphayax/microservice-demo-frontend-user:${GITHUB_REF_NAME}
 
   docker-front-admin:
     runs-on: ubuntu-latest
@@ -108,4 +114,6 @@ jobs:
         with:
           context: ./front-admin/
           push: true
-          tags: alphayax/microservice-demo-frontend-admin:latest
+          tags: |
+            alphayax/microservice-demo-frontend-admin:latest
+            alphayax/microservice-demo-frontend-admin:${GITHUB_REF_NAME}
