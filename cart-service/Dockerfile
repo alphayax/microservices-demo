@@ -25,8 +25,8 @@ FROM scratch AS final
 # Copy the executable from the builder stage
 COPY --from=builder /app/main .
 
-# Expose port 8080 to the outside world
-EXPOSE 8080
+# Expose port 8081 to the outside world
+EXPOSE 8081
 
 # Command to run the executable
 CMD ["./main"]
