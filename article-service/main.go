@@ -59,7 +59,7 @@ func loadApiServer() {
 	}))
 
 	Router.Use(
-		gin.LoggerWithWriter(gin.DefaultWriter, "/healthz"),
+		gin.LoggerWithWriter(gin.DefaultWriter, "/", "/healthz"),
 		gin.Recovery(),
 	)
 
