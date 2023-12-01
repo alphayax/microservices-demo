@@ -58,9 +58,16 @@ func loadApiServer() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	Router.GET("/", handler.GetArticle)
-	Router.POST("/", handler.AddArticle)
-	Router.DELETE("/:articleId/", handler.DeleteArticle)
+	Router.Use(
+		gin.LoggerWithWriter(gin.DefaultWriter, "/healthz"),
+		gin.Recovery(),
+	)
+
+	Router.GET("/", handler.HealthZ)
+	Router.GET("/healthz", handler.HealthZ)
+	Router.GET("/article/", handler.GetArticle)
+	Router.POST("/article/", handler.AddArticle)
+	Router.DELETE("/article/:articleId/", handler.DeleteArticle)
 
 	listenAddress := viper.GetString("listen")
 	err := Router.Run(listenAddress)
