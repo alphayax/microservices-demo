@@ -1,14 +1,22 @@
-GET http://localhost:8081/1/
+GET http://localhost:8080/
 Accept: application/json
 
-###
-PUT http://localhost:8081/1/
+### Health probe
+GET http://localhost:8080/healthz
+Accept: application/json
+
+### Get cart with id=1
+GET http://localhost:8081/cart/1/
+Accept: application/json
+
+### Update cart with id=1
+PUT http://localhost:8081/cart/1/
 Content-Type: application/json
 
 {
   "items": ["1", "2", "3"]
 }
 
-###
-DELETE http://localhost:8081/1/
+### Delete cart with id=1
+DELETE http://localhost:8081/cart/1/
 Accept: application/json

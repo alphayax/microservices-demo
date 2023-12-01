@@ -58,9 +58,16 @@ func loadApiServer() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	Router.GET("/:cartId/", handler.GetCart)
-	Router.PUT("/:cartId/", handler.UpdateCart)
-	Router.DELETE("/:cartId/", handler.DeleteCart)
+	Router.Use(
+		gin.LoggerWithWriter(gin.DefaultWriter, "/healthz"),
+		gin.Recovery(),
+	)
+
+	Router.GET("/", handler.HealthZ)
+	Router.GET("/healthz", handler.HealthZ)
+	Router.GET("/cart/:cartId/", handler.GetCart)
+	Router.PUT("/cart/:cartId/", handler.UpdateCart)
+	Router.DELETE("/cart/:cartId/", handler.DeleteCart)
 
 	listenAddress := viper.GetString("listen")
 	err := Router.Run(listenAddress)
