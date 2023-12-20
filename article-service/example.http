@@ -1,12 +1,16 @@
-GET http://localhost:8080/
+### Root endpoint
+GET http://{{ host }}/
 Accept: application/json
 
-###
-GET http://localhost:8080/healthz
+### Test liveness probe
+GET http://{{ host }}/healthz
 Accept: application/json
 
-###
-POST http://localhost:8080/article/
+### Get all articles
+GET http://{{ host }}/article/
+
+### Add article
+POST http://{{ host }}/article/
 Content-Type: application/json
 
 {
@@ -14,6 +18,7 @@ Content-Type: application/json
   "description": "The best article of all times"
 }
 
-###
-DELETE http://localhost:8080/article/655cabd93dea2ba2e45e3159/
+### Remove article
+@articleId = 6583018ff228b3e5cf8dfabe
+DELETE http://{{ host }}/article/{{ articleId }}/
 Accept: application/json
