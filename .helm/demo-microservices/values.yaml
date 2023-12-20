@@ -1,0 +1,8 @@
+
+mongodb:
+  enabled: true
+  auth:
+    rootPassword: secretpassword
+    username: alphauser
+    password: alphapass
+    database: article-alpha

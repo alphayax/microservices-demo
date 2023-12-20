@@ -1,0 +1,11 @@
+apiVersion: v2
+name: demo-microservices
+description: "Microservice Demo - Umbrella chart"
+type: application
+version: 0.1.0
+appVersion: "2.0.1"
+dependencies:
+  - name: mongodb
+    repository: "oci://registry-1.docker.io/bitnamicharts"
+    version: 14.4.3
+    condition: mongodb.enabled
